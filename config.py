@@ -8,23 +8,23 @@ load_dotenv(os.path.join(basedir, '.env'))
 class Config(object):
     SECRET_KEY = os.environ.get("SECRET_KEY") or 'this is secret string'
     #SECRET_KEY = a-really-long-and-unique-key-that-nobody-knows
-    """
     # Sqlite Database
-        SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
             'sqlite:///' +  os.path.join(basedir, 'app.db')
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
-    """
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     """
         Connect MySQL
-    """
     HOSTNAME = '127.0.0.1'
     PORT = '3306'
     DATABASE = 'app' # DataBase Name
     USERNAME = 'root'
     PASSWORD = 'root'
     DB_URI = 'mysql+cymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASSWORD, HOSTNAME, PORT, DATABASE)
+
     SQLALCHEMY_DATABASE_URI = DB_URI       # 这个参数是SQLAlchemy 内部定义的参数
     SQLALCHEMY_TRACK_MODIFICATIONS = False # 这个参数是SQLAlchemy 内部定义的参数
+    """
 
     """
         Define Mail Servers
