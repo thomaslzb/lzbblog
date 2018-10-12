@@ -67,12 +67,16 @@ class User(UserMixin, db.Model):
     # DB Table user
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
-    about_me = db.Column(db.String(14))
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+
+    about_me = db.Column(db.String(14))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     last_message_read_time = db.Column(db.DateTime)
+
+
+    """ define TABLE-posts AND TABLE-user Relationship"""
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     """ define TABLE-follower AND TABLE-user Relationship"""
     followed = db.relationship(
@@ -235,8 +239,9 @@ class Task(db.Model):
     id = db.Column(db.String(36), primary_key=True)
     name = db.Column(db.String(128), index=True)
     description = db.Column(db.String(128))
-    user_id = db.Column(db.Integer, db.ForeignKey('user_id'))
     complete = db.Column(db.Boolean, default=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def get_rq_job(self):
         try:
@@ -248,8 +253,6 @@ class Task(db.Model):
     def get_progress(self):
         job = self.get_rq_job()
         return job.meta.get('progress', 0) if job is not None else 100
-
-
 
 
 

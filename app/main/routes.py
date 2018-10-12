@@ -46,6 +46,7 @@ def home():
         return render_template('error/DBError.html')
 
 
+
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():

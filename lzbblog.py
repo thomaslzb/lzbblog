@@ -3,6 +3,7 @@ from app.models import User, Post, Notification, Message, Task
 import logging
 
 app = create_app()
+
 app.app_context().push()
 
 cli.register(app)
@@ -29,7 +30,7 @@ if __name__ == "__main__":
     try:
         db.session.query("1").from_statement("SELECT 1").all()
         app.dbconnect = True
-        print('*** MySQL is running...')
+        print('*** DB is running...')
     except Exception as e:
         print(f"*** {e}")
         app.dbconnect = False

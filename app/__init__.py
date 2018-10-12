@@ -5,7 +5,7 @@ from logging.handlers import SMTPHandler, RotatingFileHandler
 from elasticsearch import Elasticsearch #Full-Text Search Engine
 
 from flask import Flask,current_app
-from flask import request, flash
+from flask import request
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
 from flask_bootstrap import Bootstrap
@@ -34,15 +34,14 @@ bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
 
+
 @babel.localeselector
 def get_locale():
     my_lang = request.accept_languages.best_match(current_app.config['LANGUAGES'])
     # my_lang = 'en'
     return my_lang
 
-"""
-# Log error by email
-"""
+
 def create_app(config_class = Config):
     app = Flask(__name__)
 
@@ -50,7 +49,7 @@ def create_app(config_class = Config):
 
     db.init_app(app)
 
-    migrate.init_app(app)
+    migrate.init_app(app, db)
     login.init_app(app)
     mail.init_app(app)
     bootstrap.init_app(app)
@@ -98,7 +97,7 @@ def create_app(config_class = Config):
                 datefmt='%a, %d %b %Y %H:%M:%S',
                 filename='myapp.log',
                 filemode='w')
-        
+
             logging.debug('This is debug message')
             logging.info('This is info message')
             logging.warning('This is warning message')
