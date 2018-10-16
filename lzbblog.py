@@ -3,7 +3,6 @@ from app.models import User, Post, Notification, Message, Task
 import logging
 
 app = create_app()
-
 app.app_context().push()
 
 cli.register(app)

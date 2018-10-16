@@ -62,7 +62,7 @@ def create_app(config_class = Config):
         app.elasticsearch =None
 
     app.redis = Redis.from_url(app.config['REDIS_URL'])
-    app.task_queue = rq.Queue('MyBlog-tasks', connection=app.redis)
+    app.task_queue = rq.Queue('lzbblog-tasks', connection=app.redis)
 
     # register blueprint
     from app.error import bp as error_bp
@@ -73,6 +73,10 @@ def create_app(config_class = Config):
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
+    from app.api import bp as api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
+
 
     if not app.debug or not app.testing:
         if app.config['MAIL_SERVER']:
