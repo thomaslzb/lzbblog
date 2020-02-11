@@ -20,7 +20,7 @@ cycler==0.10.0
 cymysql==0.9.12
 decorator==4.1.2
 defusedxml==0.5.0
-Django==2.1.1
+Django==2.2.10
 docx==0.2.4
 dominate==2.3.1
 elasticsearch==6.3.1
